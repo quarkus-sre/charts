@@ -9,7 +9,7 @@ metadata:
   labels:
     app: grafana
 spec:
-  replicas: namespace: {{ .Values.grafana.replicas }}
+  replicas: {{ .Values.grafana.replicas }}
   selector:
     matchLabels:
       name: grafana
