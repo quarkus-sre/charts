@@ -1,0 +1,24 @@
+---
+enabled: true
+prometheus_namespace: kafka-logging
+
+prometheus:
+  replicas: 1
+  route: true
+  clusterrole: prometheus-server
+  clusterrolebinding: prometheus-server
+  serviceaccount: prometheus-server
+  additional_scrape_configs:
+    name: additional-scrape-configs
+    key: prometheus-additional.yaml
+
+alertmanager:
+  name: alertmanager
+  replicas: 1
+
+monitoring:
+  kafka:
+    namespace: kafka-streaming
+    prometheus:
+      rule:
+        name: prometheus-k8s-rules
