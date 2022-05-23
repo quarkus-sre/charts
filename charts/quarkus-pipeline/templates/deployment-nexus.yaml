@@ -1,0 +1,48 @@
+{{- if .Values.enabled }}
+{{- if .Values.nexus }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nexus.name }}
+  namespace: {{ .Values.pipeline_namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.nexus.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nexus.name }}
+    spec:
+      containers:
+        - name: {{ .Values.nexus.name }}
+          image: {{ .Values.nexus.image }}
+          ports:
+            - containerPort: 8081
+              name: 8081-tcp
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081-tcp
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /nexus-data/karaf.pid
+          # nexus has lots of init to do first time so lets give
+          # more time for that to happen
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8081-tcp
+            failureThreshold: 18
+            periodSeconds: 10
+          volumeMounts:
+            - name: nexus-data
+              mountPath: /nexus-data
+      volumes:
+        - name: nexus-data
+          emptyDir: {}
+{{- end }}
+{{- end }}

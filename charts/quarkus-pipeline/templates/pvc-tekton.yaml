@@ -1,0 +1,17 @@
+{{- if .Values.enabled }}
+{{- if .Values.tekton.storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.tekton.name }}-pvc
+  namespace: {{ .Values.pipeline_namespace }}
+spec:
+  accessModes:
+    - {{ .Values.tekton.storage.accessmode }}
+  volumeMode: {{ .Values.tekton.storage.volumemode }}
+  resources:
+    requests:
+      storage: {{ .Values.tekton.storage.requests.storage }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,19 @@
+{{- if .Values.enabled }}
+{{- if .Values.nexus.httpproxy }}
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: {{ .Values.nexus.name }}
+  namespace: {{ .Values.pipeline_namespace }}
+spec:
+  virtualhost:
+    fqdn: nexus.127.0.0.1.nip.io
+  routes:
+    - conditions:
+      - prefix: /
+      services:
+        - name: {{ .Values.nexus.name }}
+          port: 8081
+{{- end }}
+{{- end }}
