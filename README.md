@@ -16,6 +16,7 @@ Helm charts for Quarkus SRE
    3. Grafana ```helm template -f grafana/values.yaml grafana | oc apply -f-```
       1. Configure the prometheus datasource manually on Grafana
       2. Import the Strimzi Kafka Exporter Dashboard (grafana-dashboards/kafka-exporter.json)
+   4. Jaeger ```helm template -f jaeger/values.yaml jaeger | oc apply -f-```
 4. Install Microservices (TODO pipeline. Pipeline using chart)
    1. Working using s2i without pipeline
 
