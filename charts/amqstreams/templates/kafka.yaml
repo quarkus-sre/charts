@@ -77,7 +77,7 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
-  {{- if .Values.kakfa.kafkaexporter }}
+  {{- if .Values.kafka.kafkaexporter }}
   kafkaExporter:
     topicRegex: ".*"
     groupRegex: ".*"
