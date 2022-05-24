@@ -20,3 +20,4 @@
 .idea/
 *.tmproj
 ci/
+templates/prometheus-rule-kafka.yaml
