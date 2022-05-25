@@ -1,0 +1,20 @@
+
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: label-generator-pod-monitor
+  namespace: kafka-logging
+  labels:
+    app: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - quarkus-dev
+  podMetricsEndpoints:
+    - interval: 10s
+      path: /q/metrics
+      scheme: http
+      targetPort: 8080
+  selector:
+    matchLabels:
+      app: label-generator
