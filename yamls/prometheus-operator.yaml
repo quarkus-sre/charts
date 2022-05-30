@@ -1,0 +1,136 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  creationTimestamp: '2022-05-23T20:00:14Z'
+  generation: 1
+  labels:
+    operators.coreos.com/prometheus.kafka-logging: ''
+  managedFields:
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:channel': {}
+          'f:installPlanApproval': {}
+          'f:name': {}
+          'f:source': {}
+          'f:sourceNamespace': {}
+          'f:startingCSV': {}
+      manager: Mozilla
+      operation: Update
+      time: '2022-05-23T20:00:14Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:operators.coreos.com/prometheus.kafka-logging': {}
+      manager: olm
+      operation: Update
+      time: '2022-05-23T20:00:14Z'
+    - apiVersion: operators.coreos.com/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:installedCSV': {}
+          'f:currentCSV': {}
+          'f:catalogHealth': {}
+          'f:installPlanRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+          'f:installPlanGeneration': {}
+          'f:conditions': {}
+          .: {}
+          'f:installplan':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:uuid': {}
+          'f:lastUpdated': {}
+          'f:state': {}
+      manager: catalog
+      operation: Update
+      subresource: status
+      time: '2022-05-23T20:00:27Z'
+  name: prometheus
+  namespace: kafka-logging
+  resourceVersion: '41374'
+  uid: 614909c4-8470-4a3c-8ae2-5508d459cf20
+spec:
+  channel: beta
+  installPlanApproval: Automatic
+  name: prometheus
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: prometheusoperator.0.47.0
+status:
+  installplan:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-9fp2n
+    uuid: 3c5056d9-86cd-4471-9571-487c3db4ec97
+  lastUpdated: '2022-05-23T20:00:27Z'
+  installedCSV: prometheusoperator.0.47.0
+  currentCSV: prometheusoperator.0.47.0
+  installPlanRef:
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-9fp2n
+    namespace: kafka-logging
+    resourceVersion: '41012'
+    uid: 3c5056d9-86cd-4471-9571-487c3db4ec97
+  state: AtLatestKnown
+  catalogHealth:
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: certified-operators
+        namespace: openshift-marketplace
+        resourceVersion: '33738'
+        uid: 29e414c1-1132-454b-9b0c-607547422fb6
+      healthy: true
+      lastUpdated: '2022-05-23T20:00:15Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: community-operators
+        namespace: openshift-marketplace
+        resourceVersion: '32926'
+        uid: 6e6c9b26-8b75-4921-b922-d96f1d3f68e1
+      healthy: true
+      lastUpdated: '2022-05-23T20:00:15Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: redhat-marketplace
+        namespace: openshift-marketplace
+        resourceVersion: '35981'
+        uid: 3dced85d-65c1-449f-ba25-8b2fcaa9faa0
+      healthy: true
+      lastUpdated: '2022-05-23T20:00:15Z'
+    - catalogSourceRef:
+        apiVersion: operators.coreos.com/v1alpha1
+        kind: CatalogSource
+        name: redhat-operators
+        namespace: openshift-marketplace
+        resourceVersion: '33735'
+        uid: d766e537-90bf-42fb-89d0-04121f925f69
+      healthy: true
+      lastUpdated: '2022-05-23T20:00:15Z'
+  conditions:
+    - lastTransitionTime: '2022-05-23T20:00:15Z'
+      message: all available catalogsources are healthy
+      reason: AllCatalogSourcesHealthy
+      status: 'False'
+      type: CatalogSourcesUnhealthy
+    - status: 'False'
+      type: ResolutionFailed
+  installPlanGeneration: 1
