@@ -19,6 +19,11 @@ Helm charts for Quarkus SRE
    4. Jaeger ```helm template -f jaeger/values.yaml jaeger | oc apply -f-```
 4. Install Microservices (TODO pipeline. Pipeline using chart)
    1. Working using s2i without pipeline
+5. Apply Application's Pod Monitors
+   1. ```cd yamls```
+   2. ```oc apply -f inventory-pod-monitor.yaml```
+   3. ```oc apply -f label-generator-pod-monitor.yaml```
+   4. ```oc apply -f order-processor-pod-monitor.yaml```
 
 ## Final Environment
 
