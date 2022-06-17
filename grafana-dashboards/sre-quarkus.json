@@ -61,7 +61,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1h])",
+          "expr": "sum(delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1h]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -89,8 +89,7 @@
                 "value": null
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
@@ -100,7 +99,7 @@
         "x": 3,
         "y": 0
       },
-      "id": 17,
+      "id": 50,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -118,18 +117,17 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(sre_label_generator_orders_total[1h])",
+          "expr": "sum(delta(upsRequestCounter_total[1h]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Orders",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Labels Total Last Hour",
+      "title": "UPS Labels Generated Last Hour",
       "type": "stat"
     },
     {
@@ -174,7 +172,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(sre_inventory_orders_total[1h])",
+          "expr": "sum(delta(kafka_consumergroup_current_offset{consumergroup=\"inventory\"}[1h]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -236,10 +234,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_producer_request_latency_avg{container=\"order-processor\"}",
+          "expr": "sum(kafka_producer_request_latency_avg{container=\"order-processor\"})",
           "instant": false,
           "interval": "",
-          "legendFormat": "{{container}}",
+          "legendFormat": "Order Processor",
           "refId": "A"
         }
       ],
@@ -523,7 +521,7 @@
         "x": 3,
         "y": 5
       },
-      "id": 44,
+      "id": 52,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -541,7 +539,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(http_server_errors_total{container=\"label-generator\"}[60m])",
+          "expr": "sum(delta(http_server_errors_total{container=\"fuse-label\"}[60m]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -551,7 +549,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "HTTP Errors Label Generator",
+      "title": "HTTP Errors Fuse Label",
       "type": "stat"
     },
     {
@@ -781,9 +779,6 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
           "custom": {},
           "mappings": [],
           "thresholds": {
@@ -794,8 +789,7 @@
                 "value": null
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
@@ -805,7 +799,7 @@
         "x": 19,
         "y": 9
       },
-      "id": 35,
+      "id": 51,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -823,18 +817,17 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"label-generator\"}",
+          "expr": "sum(upsRequestCounter_total)",
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Orders",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Label Generator Offset",
+      "title": "UPS Labels Total",
       "type": "stat"
     },
     {
@@ -954,7 +947,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(kafka_producer_record_error_total{container=\"order-processor\"}[60m])",
+          "expr": "sum(delta(kafka_producer_record_error_total{container=\"order-processor\"}[60m]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1006,7 +999,7 @@
         "x": 3,
         "y": 10
       },
-      "id": 46,
+      "id": 44,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -1024,7 +1017,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "delta(kafka_producer_record_error_total{container=\"label-generator\"}[60m])",
+          "expr": "sum(delta(CamelExchangesFailed_total[60m]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1034,7 +1027,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Kafka Errors Label Generator Last Hour",
+      "title": "Fuse Exchange Failed",
       "type": "stat"
     },
     {
@@ -1173,6 +1166,120 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 9,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 49,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "upsTimerRequest_seconds_max",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "UPS",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 5,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 10,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Label Response Time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "none",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
           "custom": {},
           "mappings": [],
           "thresholds": {
@@ -1233,11 +1340,11 @@
           "refId": "B"
         },
         {
-          "expr": "delta(http_server_errors_total{container=\"label-generator\"}[15m])",
+          "expr": "sum(delta(http_server_errors_total{container=\"fuse-label\"}[15m]))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{container}}",
+          "legendFormat": "Fuse Label",
           "refId": "A"
         },
         {
@@ -1315,7 +1422,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 8,
@@ -1461,11 +1568,11 @@
           "refId": "B"
         },
         {
-          "expr": "http_server_errors_total{container=\"label-generator\"}",
+          "expr": "sum(http_server_errors_total{container=\"fuse-label\"})",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{container}}",
+          "legendFormat": "Fuse Label",
           "refId": "A"
         },
         {
@@ -1543,7 +1650,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 29
       },
       "hiddenSeries": false,
       "id": 16,
@@ -1844,102 +1951,6 @@
       "type": "stat"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 34
-      },
-      "hiddenSeries": false,
-      "id": 11,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "(sum(sre_inventory_total_time_seconds_sum) - sum(sre_inventory_total_time_seconds_sum offset 1m)) / (sum(sre_inventory_total_time_seconds_count) - sum(sre_inventory_total_time_seconds_count offset 1m))",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Avg Time to Inventory (window 1 min)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -2114,6 +2125,102 @@
       "timeShift": null,
       "title": "Order Processor Kafka Errors Last Hour",
       "type": "stat"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(sum(sre_inventory_total_time_seconds_sum) - sum(sre_inventory_total_time_seconds_sum offset 1m)) / (sum(sre_inventory_total_time_seconds_count) - sum(sre_inventory_total_time_seconds_count offset 1m))",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Avg Time to Inventory (window 1 min)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "datasource": null,
@@ -2719,12 +2826,12 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "SRE Com Quarkus - 1",
   "uid": "cRomXgr7z",
-  "version": 12
+  "version": 21
 }
