@@ -22,7 +22,7 @@ Helm charts for Quarkus SRE
 5. Apply Application's Pod Monitors
    1. ```cd yamls```
    2. ```oc apply -f inventory-pod-monitor.yaml```
-   3. ```oc apply -f label-generator-pod-monitor.yaml```
+   3. ```oc apply -f fuse-label-pod-monitor.yaml```
    4. ```oc apply -f order-processor-pod-monitor.yaml```
 
 ## Final Environment
