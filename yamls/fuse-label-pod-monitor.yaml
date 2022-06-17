@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: label-generator-pod-monitor
+  name: fuse-label-pod-monitor
   namespace: kafka-logging
   labels:
     app: prometheus
@@ -17,4 +17,5 @@ spec:
       targetPort: 8080
   selector:
     matchLabels:
-      app: label-generator
+      app.kubernetes.io/name: fuse-label
+ 
