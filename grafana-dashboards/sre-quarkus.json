@@ -23,7 +23,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "dark-orange",
             "mode": "fixed"
           },
           "custom": {
@@ -492,7 +492,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "jvm_info_total{container=\"inventory\"}",
+          "expr": "sum(jvm_info_total{container=\"inventory\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -580,7 +580,7 @@
       },
       "yaxes": [
         {
-          "format": "s",
+          "format": "Orders",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -644,21 +644,21 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "kafka_topic_partition_current_offset{topic=\"orders\"}",
+          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Order Processor",
           "refId": "A"
         },
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"fuse-label\"}",
+          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"fuse-label\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Label Generator",
           "refId": "B"
         },
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"inventory\"}",
+          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"inventory\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Inventory",
@@ -2819,8 +2819,8 @@
       "gridPos": {
         "h": 8,
         "w": 7,
-        "x": 5,
-        "y": 95
+        "x": 12,
+        "y": 87
       },
       "hiddenSeries": false,
       "id": 8,
@@ -2914,5 +2914,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - 1",
   "uid": "cRomXgr7z",
-  "version": 37
+  "version": 42
 }
