@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -737,7 +737,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "HTTP Errors Order Processor",
+      "title": "HTTP Requests Errors Order Processor",
       "type": "stat"
     },
     {
@@ -2710,7 +2710,7 @@
         {
           "expr": "sum(http_server_errors_total{container=\"order-processor\"})",
           "interval": "",
-          "legendFormat": "{{container}}",
+          "legendFormat": "Order Processor",
           "refId": "B"
         },
         {
@@ -2724,7 +2724,7 @@
         {
           "expr": "sum(http_server_errors_total{container=\"inventory\"})",
           "interval": "",
-          "legendFormat": "{{container}}",
+          "legendFormat": "Inventory",
           "refId": "C"
         }
       ],
@@ -3190,5 +3190,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - 1",
   "uid": "cRomXgr7z",
-  "version": 50
+  "version": 2
 }
