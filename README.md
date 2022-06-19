@@ -20,9 +20,10 @@ Helm charts for Quarkus SRE
    4. Jaeger ```helm template -f jaeger/values.yaml jaeger | oc apply -f-```
 4. Install Microservices (TODO pipeline. Pipeline using chart)
    1. Order Processor (https://github.com/quarkus-sre/order-processor)
-   2. Fuse Label (https://github.com/quarkus-sre/label-generator)
-   3. Inventory (https://github.com/quarkus-sre/inventory)
-   4. Working using s2i without pipeline
+   2. Inventory (https://github.com/quarkus-sre/inventory)
+   3. Fuse Label (https://github.com/quarkus-sre/fuse-label)
+   4. UPS Label API (https://github.com/quarkus-sre/ups-label-api)
+   5. Working using s2i without pipeline
 5. Apply Application's Pod Monitors
    1. ```cd yamls```
    2. ```oc apply -f inventory-pod-monitor.yaml```
