@@ -207,7 +207,10 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "Orders In": "dark-yellow",
+        "Orders Shipped": "dark-green"
+      },
       "bars": true,
       "dashLength": 10,
       "dashes": false,
@@ -255,7 +258,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|fuse-label\"}[10m]))",
+          "expr": "sum(delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1m]))",
+          "interval": "",
+          "legendFormat": "Orders In",
+          "refId": "B"
+        },
+        {
+          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|fuse-label\"}[1m]))",
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
@@ -266,7 +276,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Orders Shipped (10m)",
+      "title": "Orders Shipped per Minute",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -598,7 +608,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green",
+                "color": "dark-blue",
                 "value": null
               }
             ]
@@ -1251,7 +1261,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 50,
+          "value": 1000,
           "yaxis": "left"
         },
         {
@@ -1259,7 +1269,7 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "value": 25,
+          "value": 100,
           "yaxis": "left"
         }
       ],
@@ -3180,5 +3190,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - 1",
   "uid": "cRomXgr7z",
-  "version": 47
+  "version": 50
 }
