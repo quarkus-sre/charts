@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -73,7 +73,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(delta(kafka_consumergroup_current_offset{consumergroup=\"fuse-label\"}[1h]))",
+          "expr": "sum(delta(kafka_consumergroup_current_offset{consumergroup=\"label-generator\"}[1h]))",
           "instant": false,
           "interval": "",
           "legendFormat": "Label Generator",
@@ -264,7 +264,7 @@
           "refId": "B"
         },
         {
-          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|fuse-label\"}[1m]))",
+          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}[1m]))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -424,7 +424,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "jvm_info_total{container=\"fuse-label\"}",
+          "expr": "jvm_info_total{container=\"label-generator\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -645,7 +645,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"fuse-label\"})",
+          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"label-generator\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Label Generator",
@@ -659,7 +659,7 @@
           "refId": "C"
         },
         {
-          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|fuse-label\"})",
+          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
           "interval": "",
           "legendFormat": "Orders Shipped",
           "refId": "D"
@@ -737,7 +737,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "HTTP Errors Order Processor",
+      "title": "HTTP Requests Errors Order Processor",
       "type": "stat"
     },
     {
@@ -797,7 +797,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "sum(delta(http_server_errors_total{container=\"fuse-label\"}[60m]))",
+          "expr": "sum(delta(http_server_errors_total{container=\"label-generator\"}[60m]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -929,11 +929,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "upsTimerRequest_seconds_max",
+          "expr": "avg(upsTimerRequest_seconds_max)",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "UPS",
           "refId": "A"
+        },
+        {
+          "expr": "avg(fedexTimerRequest_seconds_max)",
+          "interval": "",
+          "legendFormat": "Fedex",
+          "refId": "B"
         }
       ],
       "thresholds": [
@@ -998,10 +1004,10 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "align": null,
-            "filterable": false
+          "color": {
+            "mode": "thresholds"
           },
+          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1011,16 +1017,16 @@
                 "value": null
               },
               {
-                "color": "dark-yellow",
-                "value": 100
+                "color": "#EAB839",
+                "value": 50
               },
               {
                 "color": "dark-orange",
-                "value": 500
+                "value": 150
               },
               {
                 "color": "dark-red",
-                "value": 1000
+                "value": 300
               }
             ]
           }
@@ -1028,37 +1034,41 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 5,
         "w": 8,
         "x": 16,
         "y": 14
       },
-      "id": 26,
+      "id": 75,
       "options": {
-        "displayMode": "lcd",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "textMode": "auto"
       },
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup,partition)",
+          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"}) -  min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
+          "format": "time_series",
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{consumergroup}}",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Consumer Group Lag (Orders Topic)",
-      "type": "bargauge"
+      "title": "SLO Orders Diff",
+      "type": "stat"
     },
     {
       "datasource": null,
@@ -1201,117 +1211,70 @@
       "type": "stat"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-yellow",
+                "value": 100
+              },
+              {
+                "color": "dark-orange",
+                "value": 150
+              },
+              {
+                "color": "dark-red",
+                "value": 300
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 6,
         "w": 8,
         "x": 16,
-        "y": 20
+        "y": 19
       },
-      "hiddenSeries": false,
-      "id": 74,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
+      "id": 26,
       "options": {
-        "alertThreshold": true
+        "displayMode": "lcd",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
       },
-      "percentage": false,
       "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
           "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup,partition)",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{consumergroup}}",
           "refId": "A"
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 1000,
-          "yaxis": "left"
-        },
-        {
-          "colorMode": "warning",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 100,
-          "yaxis": "left"
-        }
-      ],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
       "title": "Consumer Group Lag (Orders Topic)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "bargauge"
     },
     {
       "aliasColors": {},
@@ -1378,8 +1341,14 @@
         {
           "expr": "sum(upsRequestCounter_total)",
           "interval": "",
-          "legendFormat": "Label Generator",
+          "legendFormat": "UPS",
           "refId": "B"
+        },
+        {
+          "expr": "sum(fedexRequestCounter_total)",
+          "interval": "",
+          "legendFormat": "Fedex",
+          "refId": "A"
         }
       ],
       "thresholds": [],
@@ -1492,7 +1461,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(delta(http_server_errors_total{container=\"fuse-label\"}[15m]))",
+          "expr": "sum(delta(http_server_errors_total{container=\"label-generator\"}[15m]))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1557,12 +1526,194 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 74,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup,partition)",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 300,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "warning",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 100,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Consumer Group Lag (Orders Topic)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "datasource": null,
       "fieldConfig": {
         "defaults": {
           "custom": {
             "align": null,
-            "displayMode": "auto",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-purple",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 9,
+        "y": 29
+      },
+      "id": 76,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "expr": "sum(fedexRequestCounter_total)",
+          "interval": "",
+          "legendFormat": "Fedex",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(upsRequestCounter_total)",
+          "interval": "",
+          "legendFormat": "UPS",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Labels per Company",
+      "type": "stat"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": null,
             "filterable": false
           },
           "mappings": [],
@@ -1574,63 +1725,109 @@
                 "value": null
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 5,
-        "w": 7,
-        "x": 9,
-        "y": 29
+        "h": 11,
+        "w": 16,
+        "x": 0,
+        "y": 34
       },
-      "id": 55,
+      "hiddenSeries": false,
+      "id": 77,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
       "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Value"
-          }
-        ]
+        "alertThreshold": true
       },
+      "percentage": false,
       "pluginVersion": "7.3.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
       "targets": [
         {
-          "expr": "sum((upsRequestCounter_total)) by (container)",
-          "format": "table",
-          "instant": true,
+          "expr": "sum(delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1h]))",
+          "format": "time_series",
+          "instant": false,
           "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "Order Processor",
           "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Labels",
-      "transformations": [
+        },
         {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true
-            },
-            "indexByName": {
-              "Time": 2,
-              "Value": 1,
-              "container": 0
-            },
-            "renameByName": {
-              "Time": "",
-              "container": ""
-            }
-          }
+          "expr": "sum(delta(kafka_consumergroup_current_offset{consumergroup=\"label-generator\"}[1h]))",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "Label Generator",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(delta(kafka_consumergroup_current_offset{consumergroup=\"inventory\"}[1h]))",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "Inventory",
+          "refId": "C"
         }
       ],
-      "type": "table"
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Orders Per App (1 Hour)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "datasource": null,
@@ -1672,7 +1869,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 29
+        "y": 34
       },
       "id": 28,
       "options": {
@@ -1736,7 +1933,7 @@
         "h": 7,
         "w": 8,
         "x": 16,
-        "y": 33
+        "y": 38
       },
       "hiddenSeries": false,
       "id": 73,
@@ -1767,7 +1964,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|fuse-label\"})",
+          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
@@ -1848,10 +2045,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 12,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 45
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1889,7 +2086,7 @@
           "refId": "A"
         },
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"fuse-label\"}",
+          "expr": "kafka_consumergroup_current_offset{consumergroup=\"label-generator\"}",
           "interval": "",
           "legendFormat": "Label Generator",
           "refId": "B"
@@ -1954,7 +2151,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 52
+        "y": 55
       },
       "id": 66,
       "options": {
@@ -1985,7 +2182,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 54
+        "y": 57
       },
       "hiddenSeries": false,
       "id": 64,
@@ -2093,7 +2290,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 54
+        "y": 57
       },
       "hiddenSeries": false,
       "id": 70,
@@ -2191,7 +2388,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 64
+        "y": 67
       },
       "hiddenSeries": false,
       "id": 69,
@@ -2293,7 +2490,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 67
       },
       "hiddenSeries": false,
       "id": 71,
@@ -2410,7 +2607,7 @@
         "h": 12,
         "w": 8,
         "x": 0,
-        "y": 74
+        "y": 77
       },
       "hiddenSeries": false,
       "id": 59,
@@ -2500,7 +2697,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 86
+        "y": 89
       },
       "id": 67,
       "options": {
@@ -2545,7 +2742,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 88
+        "y": 91
       },
       "hiddenSeries": false,
       "id": 40,
@@ -2678,7 +2875,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 88
+        "y": 91
       },
       "hiddenSeries": false,
       "id": 68,
@@ -2710,7 +2907,7 @@
         {
           "expr": "sum(http_server_errors_total{container=\"order-processor\"})",
           "interval": "",
-          "legendFormat": "{{container}}",
+          "legendFormat": "Order Processor",
           "refId": "B"
         },
         {
@@ -2724,7 +2921,7 @@
         {
           "expr": "sum(http_server_errors_total{container=\"inventory\"})",
           "interval": "",
-          "legendFormat": "{{container}}",
+          "legendFormat": "Inventory",
           "refId": "C"
         }
       ],
@@ -2796,7 +2993,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 98
+        "y": 101
       },
       "hiddenSeries": false,
       "id": 16,
@@ -2904,7 +3101,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 98
+        "y": 101
       },
       "hiddenSeries": false,
       "id": 11,
@@ -3000,7 +3197,7 @@
         "h": 8,
         "w": 7,
         "x": 5,
-        "y": 106
+        "y": 109
       },
       "hiddenSeries": false,
       "id": 10,
@@ -3096,7 +3293,7 @@
         "h": 8,
         "w": 7,
         "x": 12,
-        "y": 106
+        "y": 109
       },
       "hiddenSeries": false,
       "id": 8,
@@ -3190,5 +3387,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - 1",
   "uid": "cRomXgr7z",
-  "version": 50
+  "version": 8
 }
