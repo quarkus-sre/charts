@@ -258,15 +258,15 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1m]))",
-          "interval": "",
+          "expr": "sum(idelta(kafka_topic_partition_current_offset{topic=\"orders\"}[1m]))",
+          "interval": "1m",
           "legendFormat": "Orders In",
           "refId": "B"
         },
         {
-          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}[1m]))",
+          "expr": "min(idelta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}[1m]))",
           "instant": false,
-          "interval": "",
+          "interval": "1m",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
           "refId": "A"
@@ -282,6 +282,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transformations": [],
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -3380,12 +3381,12 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "SRE Com Quarkus - 1",
+  "title": "SRE Com Quarkus",
   "uid": "cRomXgr7z",
-  "version": 8
+  "version": 4
 }
