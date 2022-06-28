@@ -1966,7 +1966,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
+          "expr": "min(sum(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}) by (consumergroup))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
@@ -2703,5 +2703,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - Final",
   "uid": "cRomXgr7z",
-  "version": 10
+  "version": 11
 }
