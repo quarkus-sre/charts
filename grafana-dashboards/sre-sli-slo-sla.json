@@ -109,7 +109,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 8,
+        "w": 4,
         "x": 8,
         "y": 0
       },
@@ -131,7 +131,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "((sum(delta(upsTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"3.0\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"ups-out-route\"}[60m]))))*100 ",
+          "expr": "((sum(delta(upsTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"0.5\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"ups-out-route\"}[60m]))))*100 ",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -139,7 +139,69 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "SLI UPS Response Time Higher than 3 seconds [1h]",
+      "title": "SLI UPS Response Time Higher than 500 ms [1h]",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-yellow",
+                "value": 90
+              },
+              {
+                "color": "dark-green",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 94,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "expr": "((sum(delta(fedexTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"0.5\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"fedex-out-route\"}[60m]))))*100 ",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "SLI Fedex Response Time Higher than 500 ms [1h]",
       "type": "stat"
     },
     {
@@ -461,7 +523,7 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
@@ -509,7 +571,7 @@
         "total": false,
         "values": false
       },
-      "lines": false,
+      "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
@@ -526,10 +588,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((sum(delta(upsTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"3.0\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"ups-out-route\"}[60m]))))*100 ",
+          "expr": "((sum(delta(upsTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"0.5\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"ups-out-route\"}[60m]))))*100 ",
           "interval": "",
-          "legendFormat": "SLI",
+          "legendFormat": "SLI UPS",
           "refId": "A"
+        },
+        {
+          "expr": "((sum(delta(fedexTimerRequest_seconds_bucket{camelContext=\"camel-1\",le=\"0.5\"}[60m])))/(sum(delta(CamelExchangesTotal_total{routeId=\"fedex-out-route\"}[60m]))))*100 ",
+          "interval": "",
+          "legendFormat": "SLI Fedex",
+          "refId": "B"
         }
       ],
       "thresholds": [
@@ -545,7 +613,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "SLO UPS Response Time Higher than 3 seconds [1h]",
+      "title": "SLO Label Response Time Higher than 500 ms [1h]",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -736,16 +804,16 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 5
+                "color": "dark-yellow",
+                "value": 0.5
               },
               {
                 "color": "dark-orange",
-                "value": 7
+                "value": 1.5
               },
               {
                 "color": "dark-red",
-                "value": 10
+                "value": 3
               }
             ]
           },
@@ -777,7 +845,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "upsTimerRequest_seconds_max",
+          "expr": "avg(upsTimerRequest_seconds{camelContext=\"camel-1\",quantile=\"0.95\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -785,7 +853,7 @@
           "refId": "A"
         },
         {
-          "expr": "fedexTimerRequest_seconds_max",
+          "expr": "avg(fedexTimerRequest_seconds{camelContext=\"camel-1\",quantile=\"0.95\"})",
           "interval": "",
           "legendFormat": "Fedex",
           "refId": "B"
@@ -793,7 +861,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "SLO Label Latency",
+      "title": "SLO Label Latency P95",
       "type": "stat"
     },
     {
@@ -1072,14 +1140,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "upsTimerRequest_seconds_max",
+          "expr": "avg(upsTimerRequest_seconds_max)",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "UPS",
           "refId": "A"
         },
         {
-          "expr": "upsTimerRequest_seconds_max",
+          "expr": "avg(upsTimerRequest_seconds_max)",
           "interval": "",
           "legendFormat": "Fedex",
           "refId": "B"
@@ -1461,5 +1529,5 @@
   "timezone": "",
   "title": "SRE Com Quarkus - Error Budget",
   "uid": "Y6_Nr_q7k",
-  "version": 17
+  "version": 22
 }
