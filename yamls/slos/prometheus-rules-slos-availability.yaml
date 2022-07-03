@@ -1,0 +1,231 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: alert-rules
+    app: prometheus
+  name: prometheus-rules-label-slos
+  namespace: kafka-logging
+spec:
+  groups:
+  - name: sloth-slo-sli-recordings-label-generator-label-providers-http-availability
+    rules:
+    - record: slo:sli_error:ratio_rate5m
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[5m])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[5m])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 5m
+    - record: slo:sli_error:ratio_rate30m
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[30m])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[30m])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 30m
+    - record: slo:sli_error:ratio_rate1h
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[1h])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[1h])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 1h
+    - record: slo:sli_error:ratio_rate2h
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[2h])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[2h])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 2h
+    - record: slo:sli_error:ratio_rate6h
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[6h])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[6h])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 6h
+    - record: slo:sli_error:ratio_rate1d
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[1d])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[1d])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 1d
+    - record: slo:sli_error:ratio_rate3d
+      expr: |
+        (sum(
+          rate(CamelExchangesFailed_total[3d])
+        )
+        )
+        /
+        (sum(
+          rate(CamelExchangesTotal_total[3d])
+        )
+        )
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 3d
+    - record: slo:sli_error:ratio_rate30d
+      expr: |
+        sum_over_time(slo:sli_error:ratio_rate5m{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}[30d])
+        / ignoring (sloth_window)
+        count_over_time(slo:sli_error:ratio_rate5m{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}[30d])
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_window: 30d
+  - name: sloth-slo-meta-recordings-label-generator-label-providers-http-availability
+    rules:
+    - record: slo:objective:ratio
+      expr: vector(0.95)
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:error_budget:ratio
+      expr: vector(1-0.95)
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:time_period:days
+      expr: vector(30)
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:current_burn_rate:ratio
+      expr: |
+        slo:sli_error:ratio_rate5m{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+        / on(sloth_id, sloth_slo, sloth_service) group_left
+        slo:error_budget:ratio{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:current_error_budget_remaining:ratio
+      expr: 1 - slo:current_burn_rate:ratio{sloth_id="label-generator-label-providers-http-availability",
+        sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:burn_rate1h:ratio
+      expr: |
+        slo:sli_error:ratio_rate1h{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+        / on(sloth_id, sloth_slo, sloth_service) group_left
+        slo:error_budget:ratio{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:error_budget_remaining1h:ratio
+      expr: 1 - slo:burn_rate1h:ratio{sloth_id="label-generator-label-providers-http-availability",
+        sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:period_burn_rate:ratio
+      expr: |
+        slo:sli_error:ratio_rate30d{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+        / on(sloth_id, sloth_slo, sloth_service) group_left
+        slo:error_budget:ratio{sloth_id="label-generator-label-providers-http-availability", sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: slo:period_error_budget_remaining:ratio
+      expr: 1 - slo:period_burn_rate:ratio{sloth_id="label-generator-label-providers-http-availability",
+        sloth_service="label-generator", sloth_slo="label-providers-http-availability"}
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+    - record: sloth_slo_info
+      expr: vector(1)
+      labels:
+        owner: srequarkus
+        sloth_id: label-generator-label-providers-http-availability
+        sloth_mode: cli-gen-prom
+        sloth_objective: "95"
+        sloth_service: label-generator
+        sloth_slo: label-providers-http-availability
+        sloth_spec: prometheus/v1
+        sloth_version: sloth-helm-chart-0.5.2-20-g481c16f
