@@ -258,15 +258,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(delta(kafka_topic_partition_current_offset{topic=\"orders\"}[1m]))",
-          "interval": "",
+          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"})",
+          "instant": false,
+          "interval": "5m",
           "legendFormat": "Orders In",
           "refId": "B"
         },
         {
-          "expr": "min(delta(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}[1m]))",
+          "expr": "min(sum(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}) by (consumergroup))",
           "instant": false,
-          "interval": "",
+          "interval": "5m",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
           "refId": "A"
@@ -276,12 +277,13 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Orders Shipped per Minute",
+      "title": "Orders Shipped",
       "tooltip": {
         "shared": true,
         "sort": 0,
         "value_type": "individual"
       },
+      "transformations": [],
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -659,7 +661,7 @@
           "refId": "C"
         },
         {
-          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
+          "expr": "min(sum(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}) by (consumergroup))",
           "interval": "",
           "legendFormat": "Orders Shipped",
           "refId": "D"
@@ -1057,7 +1059,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"}) -  min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
+          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"}) -  min(sum(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}) by (consumergroup))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1265,7 +1267,7 @@
       "pluginVersion": "7.3.7",
       "targets": [
         {
-          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup,partition)",
+          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup)",
           "interval": "",
           "legendFormat": "{{consumergroup}}",
           "refId": "A"
@@ -1574,9 +1576,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup,partition)",
+          "expr": "sum(kafka_consumergroup_lag{topic=\"orders\"}) by (consumergroup)",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{consumergroup}}",
           "refId": "A"
         }
       ],
@@ -1964,7 +1966,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "min(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"})",
+          "expr": "min(sum(kafka_consumergroup_current_offset{consumergroup=~\"inventory|label-generator\"}) by (consumergroup))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Orders Shipped",
@@ -2079,20 +2081,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kafka_topic_partition_current_offset{topic=\"orders\"}",
+          "expr": "sum(kafka_topic_partition_current_offset{topic=\"orders\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Order Processor",
           "refId": "A"
         },
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"label-generator\"}",
+          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"label-generator\"})",
           "interval": "",
           "legendFormat": "Label Generator",
           "refId": "B"
         },
         {
-          "expr": "kafka_consumergroup_current_offset{consumergroup=\"inventory\"}",
+          "expr": "sum(kafka_consumergroup_current_offset{consumergroup=\"inventory\"})",
           "interval": "",
           "legendFormat": "Inventory",
           "refId": "C"
@@ -2604,8 +2606,8 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 12,
-        "w": 8,
+        "h": 11,
+        "w": 24,
         "x": 0,
         "y": 77
       },
@@ -2684,692 +2686,6 @@
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 89
-      },
-      "id": 67,
-      "options": {
-        "content": "# Refactor",
-        "mode": "markdown"
-      },
-      "pluginVersion": "7.3.7",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "text"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 91
-      },
-      "hiddenSeries": false,
-      "id": 40,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(http_server_errors_total{container=\"order-processor\"})",
-          "interval": "",
-          "legendFormat": "Order Processor",
-          "refId": "B"
-        },
-        {
-          "expr": "sum(http_server_errors_total{container=\"fuse-label\"})",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Fuse Label",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(http_server_errors_total{container=\"inventory\"})",
-          "interval": "",
-          "legendFormat": "Inventory",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 5,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "HTTP Errors",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 91
-      },
-      "hiddenSeries": false,
-      "id": 68,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(http_server_errors_total{container=\"order-processor\"})",
-          "interval": "",
-          "legendFormat": "Order Processor",
-          "refId": "B"
-        },
-        {
-          "expr": "sum(http_server_errors_total{container=\"fuse-label\"})",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "Fuse Label",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(http_server_errors_total{container=\"inventory\"})",
-          "interval": "",
-          "legendFormat": "Inventory",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 5,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "HTTP Errors",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 101
-      },
-      "hiddenSeries": false,
-      "id": 16,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(application_sre_order_receiver_orders_total) - sum(application_sre_order_receiver_orders_total offset 60m)",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "Order Processor",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(sre_label_generator_orders_total) - sum(sre_label_generator_orders_total offset 60m)",
-          "interval": "",
-          "legendFormat": "Label Generator",
-          "refId": "B"
-        },
-        {
-          "expr": "sum(sre_inventory_orders_total) - sum(sre_inventory_orders_total offset 60m)",
-          "interval": "",
-          "legendFormat": "Inventory",
-          "refId": "C"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Orders Per App Last Hour",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 101
-      },
-      "hiddenSeries": false,
-      "id": 11,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "(sum(sre_inventory_total_time_seconds_sum) - sum(sre_inventory_total_time_seconds_sum offset 1m)) / (sum(sre_inventory_total_time_seconds_count) - sum(sre_inventory_total_time_seconds_count offset 1m))",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Avg Time to Inventory (window 1 min)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 5,
-        "y": 109
-      },
-      "hiddenSeries": false,
-      "id": 10,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "(sum(sre_label_generator_total_time_seconds_sum) - sum(sre_label_generator_total_time_seconds_sum offset 1m)) / (sum(sre_label_generator_total_time_seconds_count) - sum(sre_label_generator_total_time_seconds_count offset 1m))",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Avg Time to Label (window 1 min)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 12,
-        "y": 109
-      },
-      "hiddenSeries": false,
-      "id": 8,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(sre_inventory_total_time_seconds_sum) / sum(sre_inventory_total_time_seconds_count)",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Avg Time to Inv",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "refresh": "5s",
@@ -3385,7 +2701,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "SRE Com Quarkus - 1",
+  "title": "SRE Com Quarkus - Final",
   "uid": "cRomXgr7z",
-  "version": 8
+  "version": 11
 }
