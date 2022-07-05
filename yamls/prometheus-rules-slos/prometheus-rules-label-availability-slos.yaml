@@ -5,7 +5,7 @@ metadata:
   labels:
     role: alert-rules
     app: prometheus
-  name: prometheus-rules-label-slos
+  name: prometheus-rules-label-availability-slos
   namespace: kafka-logging
 spec:
   groups:

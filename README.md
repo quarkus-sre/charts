@@ -32,8 +32,9 @@ Helm charts for Quarkus SRE
    4. ```oc apply -f pod-monitors/order-processor-pod-monitor.yaml```
 6. Apply Application's SLOs Prometheus Rules
    1. ```cd yamls/slos```
-   2. ```oc apply -f prometheus-rules-slos/prometheus-rules-slo-availability.yaml```
-   3. ```oc apply -f prometheus-rules-slos/prometheus-rules-slo-label-fedex-latency.yaml```
+   2. ```oc apply -f prometheus-rules-slos/prometheus-rules-availability-slos.yaml```
+   3. ```oc apply -f prometheus-rules-slos/prometheus-rules-label-fedex-latency-slos.yaml```
+   4. ```oc apply -f prometheus-rules-slos/prometheus-rules-label-ups-latency-slos.yaml```
 
 ## Final Environment
 
