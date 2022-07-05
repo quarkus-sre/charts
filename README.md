@@ -21,14 +21,19 @@ Helm charts for Quarkus SRE
 4. Install Microservices (TODO pipeline. Pipeline using chart)
    1. Order Processor (https://github.com/quarkus-sre/order-processor)
    2. Inventory (https://github.com/quarkus-sre/inventory)
-   3. Fuse Label (https://github.com/quarkus-sre/fuse-label)
+   3. Label Generator (https://github.com/quarkus-sre/label-generator)
    4. UPS Label API (https://github.com/quarkus-sre/ups-label-api)
-   5. Working using s2i without pipeline
+   5. Fedex Label API (https://github.com/quarkus-sre/fedex-label-api)
+   6. Working using s2i without pipeline
 5. Apply Application's Pod Monitors
    1. ```cd yamls```
-   2. ```oc apply -f inventory-pod-monitor.yaml```
-   3. ```oc apply -f fuse-label-pod-monitor.yaml```
-   4. ```oc apply -f order-processor-pod-monitor.yaml```
+   2. ```oc apply -f pod-monitors/inventory-pod-monitor.yaml```
+   3. ```oc apply -f pod-monitors/label-generator-pod-monitor.yaml```
+   4. ```oc apply -f pod-monitors/order-processor-pod-monitor.yaml```
+6. Apply Application's SLOs Prometheus Rules
+   1. ```cd yamls/slos```
+   2. ```oc apply -f prometheus-rules-slos/prometheus-rules-slo-availability.yaml```
+   3. ```oc apply -f prometheus-rules-slos/prometheus-rules-slo-label-fedex-latency.yaml```
 
 ## Final Environment
 
