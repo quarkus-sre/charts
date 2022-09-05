@@ -1,8 +1,0 @@
-{{- if .Values.enabled }}
-{{- if .Values.kafka_namespace }}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ .Values.kafka_namespace }}
-{{- end }}
-{{- end }}

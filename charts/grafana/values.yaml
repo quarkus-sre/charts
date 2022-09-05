@@ -1,8 +1,0 @@
----
-enabled: true
-grafana_namespace: kafka-logging
-
-grafana:
-  replicas: 1
-  route: true
-  

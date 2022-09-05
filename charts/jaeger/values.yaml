@@ -1,9 +1,0 @@
----
-enabled: true
-jaeger_namespace: openshift-distributed-tracing
-
-jaeger:
-  name: jaeger-all-in-one-inmemory
-  loglevel: info
-  strategy: allInOne
-
