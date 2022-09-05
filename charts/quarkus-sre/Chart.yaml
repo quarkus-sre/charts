@@ -9,4 +9,4 @@ maintainers:
 # dependencies:
 #   - name: amqstreams
 #     version: "0.0.1"
-#     repository: https://github.com/quarkus-sre/charts
+#     repository: https://quarkus-sre.github.io/charts/
