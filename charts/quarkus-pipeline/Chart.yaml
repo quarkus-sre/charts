@@ -3,6 +3,6 @@ appVersion: v1.0.0
 description: A Helm chart for deploying a Quarkus app pipeline
 name: quarkus-pipeline
 version: 0.0.1
-home: https://github.com/redhat-cop/helm-charts
+home: https://github.com/quarkus-sre/charts
 maintainers:
 - name: gsampaio-rh

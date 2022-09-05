@@ -3,6 +3,6 @@ appVersion: v7.3.7
 description: A Helm chart for customising the deployment of the Grafana
 name: grafana
 version: 0.0.1
-home: https://github.com/redhat-cop/helm-charts
+home: https://github.com/quarkus-sre/charts
 maintainers:
 - name: gsampaio-rh
