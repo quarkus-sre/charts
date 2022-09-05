@@ -1,0 +1,81 @@
+apiVersion: v1
+entries:
+  amqstreams:
+  - apiVersion: v2
+    appVersion: v3.2.0
+    created: "2022-09-05T22:49:23.520320628Z"
+    description: A Helm chart for customising the deployment of the AMQ Streams Operator
+    digest: f3dd726b8e28fbfecb8e786ca471492b2aa52d33ad115e171f67e4b5a95baef3
+    home: https://github.com/redhat-cop/helm-charts
+    maintainers:
+    - name: gsampaio-rh
+    name: amqstreams
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/amqstreams-0.0.1/amqstreams-0.0.1.tgz
+    version: 0.0.1
+  grafana:
+  - apiVersion: v2
+    appVersion: v7.3.7
+    created: "2022-09-05T22:49:23.67874375Z"
+    description: A Helm chart for customising the deployment of the Grafana
+    digest: c0f665e6539b75bbd7b6969109c2de60ce01c7a191feb422de6897d0ecf43905
+    home: https://github.com/redhat-cop/helm-charts
+    maintainers:
+    - name: gsampaio-rh
+    name: grafana
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/grafana-0.0.1/grafana-0.0.1.tgz
+    version: 0.0.1
+  jaeger:
+  - apiVersion: v2
+    appVersion: v3.2.0
+    created: "2022-09-05T22:49:23.902462707Z"
+    description: A Helm chart for customising the deployment of the Jaeger
+    digest: b82675577d1d942bddfc9a2bfc669fcb7db48fa5c1e6f13cbf21ff0b89a119ef
+    home: https://github.com/redhat-cop/helm-charts
+    maintainers:
+    - name: gsampaio-rh
+    name: jaeger
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/jaeger-0.0.1/jaeger-0.0.1.tgz
+    version: 0.0.1
+  prometheus:
+  - apiVersion: v2
+    appVersion: v3.2.0
+    created: "2022-09-05T22:49:24.051138796Z"
+    description: A Helm chart for customising the deployment of the Prometheus
+    digest: 55492f77764bdfc7b3eced9b0cf2157419710d6f3093100b3b64c45e62b96b68
+    home: https://github.com/redhat-cop/helm-charts
+    maintainers:
+    - name: gsampaio-rh
+    name: prometheus
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/prometheus-0.0.1/prometheus-0.0.1.tgz
+    version: 0.0.1
+  quarkus-pipeline:
+  - apiVersion: v2
+    appVersion: v1.0.0
+    created: "2022-09-05T22:49:24.210122537Z"
+    description: A Helm chart for deploying a Quarkus app pipeline
+    digest: c84a08a04a8085d15f48248d99b9dff3b3d631c076d689e912cfbdb925de03ac
+    home: https://github.com/redhat-cop/helm-charts
+    maintainers:
+    - name: gsampaio-rh
+    name: quarkus-pipeline
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/quarkus-pipeline-0.0.1/quarkus-pipeline-0.0.1.tgz
+    version: 0.0.1
+  quarkus-sre:
+  - apiVersion: v2
+    appVersion: v3.2.0
+    created: "2022-09-05T22:49:24.354303572Z"
+    description: A Helm chart for customising the deployment of the Quarkus SRE Workshop.
+    digest: ef913f95d2e08563cf136012832b4e8a13e5f3bae33349b2adc9a21cf4c44c65
+    home: https://github.com/quarkus-sre/charts
+    maintainers:
+    - name: gsampaio-rh
+    name: quarkus-sre
+    urls:
+    - https://github.com/quarkus-sre/charts/releases/download/quarkus-sre-0.0.1/quarkus-sre-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-09-05T22:49:23.271926526Z"
