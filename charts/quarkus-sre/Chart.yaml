@@ -6,7 +6,7 @@ version: 0.0.1
 home: https://github.com/quarkus-sre/charts
 maintainers:
   - name: gsampaio-rh
-dependencies:
-  - name: amqstreams
-    version: "0.0.1"
-    repository: https://github.com/quarkus-sre/charts
+# dependencies:
+#   - name: amqstreams
+#     version: "0.0.1"
+#     repository: https://github.com/quarkus-sre/charts
