@@ -10,3 +10,12 @@ dependencies:
   - name: amqstreams
     version: "0.0.1"
     repository: https://quarkus-sre.github.io/charts/
+  - name: grafana
+    version: "0.0.1"
+    repository: https://quarkus-sre.github.io/charts/
+  - name: prometheus
+    version: "0.0.1"
+    repository: https://quarkus-sre.github.io/charts/
+  - name: jaeger
+    version: "0.0.1"
+    repository: https://quarkus-sre.github.io/charts/
