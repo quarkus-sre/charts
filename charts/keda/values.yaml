@@ -1,0 +1,9 @@
+---
+enabled: true
+keda_namespace: openshift-distributed-tracing
+
+keda:
+  name: keda
+  loglevel: info
+  logEncoder: allInOne
+
