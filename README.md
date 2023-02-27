@@ -8,9 +8,10 @@ helm repo add quarkus-sre https://quarkus-sre.github.io/charts
 
 1. Running OCP
 2. Create the namespaces
-   1. Kafka Namespace ```oc new-project kafka-streaming```
-   2. Prometheus & Grafana Namespace ```oc new-project kafka-logging```
-   3. KEDA ```oc new-project keda```
+   1. Quarkus Development ```oc new-project quarkus-dev```
+   2. Kafka Namespace ```oc new-project kafka-streaming```
+   3. Prometheus & Grafana Namespace ```oc new-project kafka-logging```
+   4. KEDA ```oc new-project keda```
 3. Install Operators: 
    1. Red Hat Integration AMQ Streams
    2. Prometheus Operator
