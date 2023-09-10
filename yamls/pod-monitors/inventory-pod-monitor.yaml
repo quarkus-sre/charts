@@ -16,4 +16,4 @@ spec:
       targetPort: 8080
   selector:
     matchLabels:
-      app: inventory
+      deployment: inventory
