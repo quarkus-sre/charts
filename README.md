@@ -110,23 +110,23 @@ Deploy the following Quarkus microservices using S2I (Source-to-Image):
 
 1. Order Processor
 ```bash
-oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/order-processor --name=order-processor-app -n quarkus-dev
+oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/order-processor --name=order-processor -n quarkus-dev
 ```
 2. Inventory
 ```bash
-oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/inventory --name=inventory-app -n quarkus-dev
+oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/inventory --name=inventory -n quarkus-dev
 ```
 3. Label Generator
 ```bash
-oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/label-generator --name=label-generator-app -n quarkus-dev
+oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/label-generator --name=label-generator -n quarkus-dev
 ```
 4. UPS Label API
 ```bash
-oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/ups-label-api --name=ups-label-api-app
+oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/ups-label-api --name=ups-label-api -n quarkus-dev
 ```
 5. Fedex Label API
 ```bash
-oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/fedex-label-api --name=fedex-label-api-app -n quarkus-dev
+oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/fedex-label-api --name=fedex-label-api -n quarkus-dev
 ```
 
 ## Apply Monitoring & Autoscaling Configurations
