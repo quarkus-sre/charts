@@ -28,12 +28,12 @@ helm repo add quarkus-sre https://quarkus-sre.github.io/charts
    4. Jaeger ```helm template -f jaeger/values.yaml jaeger | oc apply -f-```
    5. KEDA ```helm template -f keda/values.yaml keda | oc apply -f-```
 5. Install Microservices (TODO pipeline. Pipeline using chart)
-   1. Order Processor (https://github.com/quarkus-sre/order-processor)
-   2. Inventory (https://github.com/quarkus-sre/inventory)
-   3. Label Generator (https://github.com/quarkus-sre/label-generator)
-   4. UPS Label API (https://github.com/quarkus-sre/ups-label-api)
-   5. Fedex Label API (https://github.com/quarkus-sre/fedex-label-api)
-   6. Working using s2i without pipeline
+   1. Order Processor (https://github.com/quarkus-sre/order-processor) ```oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/order-processor --name=order-processor-app```
+   2. Inventory (https://github.com/quarkus-sre/inventory) ```oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/inventory --name=inventory-app```
+   3. Label Generator (https://github.com/quarkus-sre/label-generator) ```oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/label-generator --name=label-generator-app```
+   4. UPS Label API (https://github.com/quarkus-sre/ups-label-api) ```oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/ups-label-api --name=ups-label-api-app```
+   5. Fedex Label API (https://github.com/quarkus-sre/fedex-label-api) ```oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/fedex-label-api --name=fedex-label-api-app```
+   NOTE: Working using s2i without pipeline
 6. Apply Application's Pod Monitors
    1. ```cd yamls```
    2. ```oc apply -f pod-monitors/inventory-pod-monitor.yaml```
