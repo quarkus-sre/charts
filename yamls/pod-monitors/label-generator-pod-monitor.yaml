@@ -17,4 +17,4 @@ spec:
       targetPort: 8080
   selector:
     matchLabels:
-      app: label-generator
+      deployment: label-generator
