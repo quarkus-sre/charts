@@ -129,6 +129,11 @@ oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/ups-lab
 oc new-app openshift/java:openjdk-11-ubi8~https://github.com/quarkus-sre/fedex-label-api --name=fedex-label-api -n quarkus-dev
 ```
 
+6. Order Processor Client
+```bash
+oc new-app https://github.com/quarkus-sre/order-processor-client -n quarkus-dev
+```
+
 ## Apply Monitoring & Autoscaling Configurations
 
 1. Pod Monitors
