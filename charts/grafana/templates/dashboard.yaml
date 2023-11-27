@@ -1,0 +1,17 @@
+{{- if .Values.enabled }}
+{{- if .Values.grafana.dashboard.kafka }}
+---
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: grafana-dashboard-kafka-exporter
+  labels:
+    app: grafana
+spec:
+  url: https://raw.githubusercontent.com/firefighters-sre/grafana-dashboards/main/kafka-exporter.json
+  json: ""
+  datasources:
+    - inputName: "DS_PROMETHEUS"
+      datasourceName: "Prometheus"
+{{- end }}
+{{- end }}

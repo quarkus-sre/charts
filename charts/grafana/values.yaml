@@ -5,4 +5,10 @@ grafana_namespace: kafka-logging
 grafana:
   replicas: 1
   route: true
+  datasource:
+    prometheus: true
+  dashboard:
+    kafka: true
+    sre: true
+    servicelevels: true
   
