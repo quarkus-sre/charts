@@ -4,7 +4,8 @@
 apiVersion: integreatly.org/v1alpha1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-dashboard-kafka-exporter
+  name: grafana-dashboard-sre
+  namespace: {{ .Values.grafana_namespace }}
   labels:
     app: grafana
 spec:
