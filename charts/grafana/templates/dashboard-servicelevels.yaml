@@ -1,0 +1,15 @@
+{{- if .Values.enabled }}
+{{- if .Values.grafana.dashboard.servicelevels }}
+---
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: grafana-dashboard-servicelevels
+  namespace: {{ .Values.grafana_namespace }}
+  labels:
+    app: grafana
+spec:
+  url: https://raw.githubusercontent.com/firefighters-sre/grafana-dashboards/main/grafana-servicelevels-dashboard.json
+  json: ""
+{{- end }}
+{{- end }}

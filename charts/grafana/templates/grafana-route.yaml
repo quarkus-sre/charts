@@ -1,18 +1,17 @@
 {{- if .Values.enabled }}
 {{- if .Values.grafana.route }}
 ---
-apiVersion: route.openshift.io/v1
 kind: Route
+apiVersion: route.openshift.io/v1
 metadata:
-  name: grafana-route
+  name: grf-route
   namespace: {{ .Values.grafana_namespace }}
 spec:
-  host: 
   to:
     kind: Service
-    name: grafana
+    name: grafana-service
+  tls: null
   port:
     targetPort: grafana
-  wildcardPolicy: None
 {{- end }}
 {{- end }}
